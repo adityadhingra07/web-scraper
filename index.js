@@ -10,9 +10,13 @@ app.get('/stat', function(req, res) {
         
             if(!error) {
                 var $ = cheerio.load(html);
+                
+                var finaldata = [];
+
+                var RE = new RegExp('^(((((((0?[13578])|(1[02]))[\.\-/]?((0?[1-9])|([12]\d)|(3[01])))|(((0?[469])|(11))[\.\-/]?((0?[1-9])|([12]\d)|(30)))|((0?2)[\.\-/]?((0?[1-9])|(1\d)|(2[0-8]))))[\.\-/]?(((19)|(20))?([\d][\d]))))|((0?2)[\.\-/]?(29)[\.\-/]?(((19)|(20))?(([02468][048])|([13579][26])))))$', 'g');  
 
                 var date, time, desc;
-                var json = {date: "", time: "", desc: ""};
+                var json = {desc: ""};
 
                 $('article').filter(function(){
                     
@@ -21,7 +25,16 @@ app.get('/stat', function(req, res) {
                     //console.log(data.text());
                     var in_res = data.text();
                     var final_result = in_res.split("\n");
-                    console.log(final_result);
+                    //console.log(final_result);
+                    for(var i = 0; i < final_result.length; i++) {
+                        //console.log("TEST" + i + ": " + final_result[i] + "\n\n");
+                        if(final_result[i].length > 80 && final_result[i].length < 300) {
+                            finaldata.push(final_result[i]);
+                        }
+                    }
+                    
+                    console.log(finaldata);
+                    res.send(finaldata); 
                     })
 
             }
