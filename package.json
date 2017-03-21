@@ -1,0 +1,12 @@
+{
+    "name"         : "web-scraper",
+    "version"      : "0.0.1",
+    "description"  : "Scrape PUPD crime stats",
+    "main"         : "index.js",
+    "author"       : "Aditya",
+    "dependencies" : {
+        "express"    : "latest",
+        "request"    : "latest",
+        "cheerio"    : "latest"
+    }
+}
