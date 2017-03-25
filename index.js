@@ -4,7 +4,7 @@ var request = require('request');
 var cheerio = require('cheerio');
 var app = express();
 
-app.get('/stat', function(req, res) {
+app.get('/statdaily', function(req, res) {
     url = "https://www.purdue.edu/ehps/police/assistance/stats/statsdaily.html";
     request(url, function(error, response, html) {
         
@@ -39,6 +39,68 @@ app.get('/stat', function(req, res) {
 
             }
         
+        })
+})
+
+app.get('/statmonthly', function(req, res) {
+    url = "https://www.purdue.edu/ehps/police/assistance/stats/statsmonth.html";
+    request(url, function(error, response, html) {
+        
+            if(!error) {
+                var $ = cheerio.load(html);
+                
+                var finaldata = [];
+
+                $('article').filter(function(){
+                    
+                    var data = $(this);
+                    //console.log(data.children().text());
+                    //console.log(data.text());
+                    var in_res = data.text();
+                    var final_result = in_res.split("\n");
+                    console.log(final_result);
+                    for(var i = 0; i < final_result.length - 5; i++) {
+                        //console.log("TEST" + i + ": " + final_result[i] + "\n\n");
+                        if(final_result[i] != "") {
+                            finaldata.push(final_result[i]);
+                        }
+                    }
+                    
+                    console.log(finaldata.slice(5));
+                    res.send(finaldata.slice(5)); 
+                    })
+            }
+        })
+})
+
+app.get('/statwarrants', function(req, res) {
+    url = "https://www.purdue.edu/ehps/police/assistance/stats/statsmonth.html";
+    request(url, function(error, response, html) {
+        
+            if(!error) {
+                var $ = cheerio.load(html);
+                
+                var finaldata = [];
+
+                $('article').filter(function(){
+                    
+                    var data = $(this);
+                    //console.log(data.children().text());
+                    console.log(data.text());
+                    //var in_res = data.text();
+                    //var final_result = in_res.split("\n");
+                    //console.log(final_result);
+                    //for(var i = 0; i < final_result.length - 5; i++) {
+                        //console.log("TEST" + i + ": " + final_result[i] + "\n\n");
+                        //if(final_result[i] != "") {
+                           // finaldata.push(final_result[i]);
+                        //}
+                    //}
+                    
+                    console.log(finaldata.slice(5));
+                    res.send(finaldata.slice(5)); 
+                    })
+            }
         })
 })
 
