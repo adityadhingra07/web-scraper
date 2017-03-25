@@ -74,7 +74,7 @@ app.get('/statmonthly', function(req, res) {
 })
 
 app.get('/statwarrants', function(req, res) {
-    url = "https://www.purdue.edu/ehps/police/assistance/stats/statsmonth.html";
+    url = "https://www.purdue.edu/ehps/police/assistance/stats/warrants.html";
     request(url, function(error, response, html) {
         
             if(!error) {
@@ -86,19 +86,19 @@ app.get('/statwarrants', function(req, res) {
                     
                     var data = $(this);
                     //console.log(data.children().text());
-                    console.log(data.text());
-                    //var in_res = data.text();
-                    //var final_result = in_res.split("\n");
-                    //console.log(final_result);
+                    //console.log(data.text());
+                    var in_res = data.text();
+                    var final_result = in_res.split("\n");
+                    console.log(final_result);
                     //for(var i = 0; i < final_result.length - 5; i++) {
                         //console.log("TEST" + i + ": " + final_result[i] + "\n\n");
                         //if(final_result[i] != "") {
                            // finaldata.push(final_result[i]);
                         //}
                     //}
-                    
-                    console.log(finaldata.slice(5));
-                    res.send(finaldata.slice(5)); 
+                    finaldata = final_result.slice(6, final_result.length - 4);
+                    console.log(finaldata);
+                    res.send(finaldata); 
                     })
             }
         })
